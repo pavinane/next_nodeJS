@@ -15,3 +15,13 @@
 
 ## Create Client
 1. integrate api using useEffect
+
+
+
+
+[Click here to visit my website](https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2)
+
+<details>
+  <summary>Click here for more details about signIn and signup</summary>
+  More detailed information can go here to create register and login using token and bcrypt
+</details>

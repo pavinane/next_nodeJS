@@ -21,28 +21,44 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      require: "Password is rrequired",
-      select: false,
-      max: 25,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-UserSchema.pre("save", function (next) {
+// UserSchema.pre("save", function (next) {
+//   const user = this;
+
+//   if (!user.isModified("password")) return next();
+//   bcrypt.genSalt(10, (err, salt) => {
+//     if (err) return next(err);
+
+//     bcrypt.hash(user.password, salt, (err, hash) => {
+//       if (err) next(err);
+
+//       user.password = hash;
+//       next();
+//     });
+//   });
+// });
+
+UserSchema.pre("save", async function (next) {
   const user = this;
-
   if (!user.isModified("password")) return next();
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) return next(err);
-
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) next(err);
-
-      user.password = hash;
-      next();
-    });
-  });
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(user.password, salt);
+  user.password = hash;
+  next();
 });
 
-module.exports = mongoose.model("user", UserSchema);
+// Compare user's entered password with the stored hash
+
+UserSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.passsword);
+};
+
+const User = mongoose.model("user", UserSchema);
+module.exports = User;
+
+// module.exports = mongoose.model("user", UserSchema);
