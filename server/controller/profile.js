@@ -31,7 +31,6 @@ async function ProfileUser(req, res) {
 async function getAllProfile(req, res) {
   try {
     const allProfile = await UserProfile.find();
-    console.log(allProfile, "allProfile");
     res.status(200).json({
       data: allProfile,
     });
@@ -90,5 +89,58 @@ async function updateProfile(req, res) {
     });
   }
 }
+// PATCH Method
+async function upataingProfileDetails(req, res) {
+  try {
+    const { id } = req.params;
+    const { userName, role, mobileNumber, gender } = req.body;
+    const updatingProfile = await UserProfile.findByIdAndUpdate(
+      id,
+      { $set: { userName, role, mobileNumber, gender } },
+      { new: true }
+    );
+    if (!updatingProfile) {
+      return res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "User profile not found",
+      });
+    }
+    res.status(200).json({
+      data: updatingProfile,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      code: 500,
+      message: "Failed to update user profile",
+    });
+  }
+}
 
-module.exports = { ProfileUser, getAllProfile, getUserProfile, updateProfile };
+// Delete
+
+async function userDeleteProfile(req, res) {
+  try {
+    const { id } = req.params;
+
+    const userProfile = await UserProfile.findByIdAndDelete(id);
+
+    res.status(200).json(userProfile);
+  } catch (error) {
+    res.status(500).json({
+      statu: "error",
+      code: 500,
+      message: "Failed to delete userProfile",
+    });
+  }
+}
+
+module.exports = {
+  ProfileUser,
+  getAllProfile,
+  getUserProfile,
+  updateProfile,
+  upataingProfileDetails,
+  userDeleteProfile,
+};

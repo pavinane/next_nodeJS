@@ -9,5 +9,11 @@ router.post("/profile", Validate, profileController.ProfileUser);
 router.get("/profile", profileController.getAllProfile);
 router.get("/profile/:id", Validate, profileController.getUserProfile);
 router.put("/profile/:id", Validate, profileController.updateProfile);
+router.patch(
+  "/profile/:id",
+  Validate,
+  profileController.upataingProfileDetails
+);
+router.delete("/profile/:id", Validate, profileController.userDeleteProfile);
 
 module.exports = router;
