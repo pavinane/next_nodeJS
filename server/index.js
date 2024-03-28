@@ -4,13 +4,14 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const Auth = require("./routes/auth");
 const Login = require("./routes/login");
+const Profile = require("./routes/profile");
 
 const app = express();
 dotenv.config();
 
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 app.use(cors());
 
 app.get("/api/home", (req, res) => {
@@ -18,6 +19,7 @@ app.get("/api/home", (req, res) => {
 });
 app.use("/api", Auth);
 app.use("/api", Login);
+app.use("/api", Profile);
 
 const mongoDB = process.env.MONGODBURL;
 

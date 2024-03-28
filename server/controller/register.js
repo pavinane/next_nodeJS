@@ -23,10 +23,11 @@ async function Register(req, res) {
     });
 
     const savedUser = await newUser.save();
-    // const { ...user_data } = savedUser._doc;
+    const { ...user_data } = savedUser._doc;
+    console.log("newUser", savedUser);
     res.status(200).json({
       staus: "Success",
-      data: [savedUser],
+      data: [user_data],
       message: "Your account is created succcessfully",
     });
   } catch (err) {

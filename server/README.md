@@ -18,8 +18,10 @@
 
 
 
+[Click here to visit my website](https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2
+& https://blog.stackademic.com/mastering-jwt-authentication-in-express-js-bfca2ea068fa
+)
 
-[Click here to visit my website](https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2)
 
 <details>
   <summary>Click here for more details about signIn and signup</summary>
