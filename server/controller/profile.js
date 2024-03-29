@@ -49,7 +49,7 @@ async function getUserProfile(req, res) {
     const { id } = req.params;
 
     const userProfile = await UserProfile.findById(id);
-    console.log(userProfile, "userProfile");
+
     res.status(200).json(userProfile);
   } catch (error) {
     res.status(500).json({
