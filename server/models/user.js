@@ -5,24 +5,29 @@ const UserSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: "Your First Name is required",
+      // required: "Your First Name is required",
       max: 25,
     },
     lastName: {
       type: String,
-      required: "Your Last Name is required",
+      // required: "Your Last Name is required",
       max: 25,
     },
     email: {
       type: String,
-      required: "Email is required",
+      // required: "Email is required",
       unique: true,
       lowerCase: true,
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
     },
+    mobileNumber: {
+      type: String,
+      // required: true,
+    },
+    otp: { type: String },
   },
   { timestamps: true }
 );

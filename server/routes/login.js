@@ -7,9 +7,15 @@ const router = express.Router();
 
 router.post(
   "/login",
-  check("email").isEmail().withMessage("Email is required").normalizeEmail(),
-  check("password").not().isEmpty(),
+  // check("email").isEmail().withMessage("Email is required").normalizeEmail(),
+  // check("password").not().isEmpty(),
   Validate,
   authController.Login
+);
+router.post(
+  "/verify",
+  check("mobileNumber").isMobilePhone(),
+  Validate,
+  authController.VerifyOTP
 );
 module.exports = router;
