@@ -2,7 +2,7 @@ const User = require("../models/user");
 
 async function Register(req, res) {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, mobileNumber } = req.body;
     // exiting new User
     const existingUser = await User.findOne({ email });
 
@@ -20,6 +20,7 @@ async function Register(req, res) {
       lastName,
       email,
       password,
+      mobileNumber,
     });
 
     const savedUser = await newUser.save();

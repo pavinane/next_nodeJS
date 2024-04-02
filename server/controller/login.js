@@ -2,10 +2,12 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const twilio = require("twilio");
+const sendEmail = require("./nodemailer");
 
 const secretKey = process.env.JWT_SECRET || "your-secret-key";
 
 // Twilo Setup
+
 const accountid = process.env.YOUR_ACCOUNTSID;
 const authToken = process.env.YOUR_AUTHTOKEN;
 const twilioClient = twilio(accountid, authToken);
@@ -17,12 +19,11 @@ function generateOTP() {
 }
 
 async function Login(req, res) {
-  const { loginType } = req.body;
+  const { email, password, mobileNumber, loginType } = req.body;
   try {
     let user;
 
     if (loginType === "email") {
-      const { email, password } = req.body;
       user = await User.findOne({ email });
 
       if (!user) {
@@ -37,16 +38,25 @@ async function Login(req, res) {
       const token = jwt.sign({ userId: user._id }, secretKey, {
         expiresIn: "1hr",
       });
+      // Send Email
+      const emailResult = await sendEmail(
+        user,
+        "Login with Email SuccessFully"
+      );
+      console.log("emailResult", emailResult);
+
+      if (!emailResult.success) {
+        console.error(emailResult.error);
+      }
 
       const { ...user_data } = user._doc;
 
-      res.status(200).json({
+      return res.status(200).json({
         message: "Login with email Successfully",
         token,
         data: [user_data.lastName, user_data.firstName],
       });
     } else if (loginType === "mobile") {
-      const { mobileNumber } = req.body;
       user = await User.findOne({ mobileNumber });
 
       if (!user) {
